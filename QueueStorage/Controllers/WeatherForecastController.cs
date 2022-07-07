@@ -42,7 +42,7 @@ namespace QueueStorage.Controllers
 
             var message = JsonSerializer.Serialize(data);
 
-           await _queueClient.SendMessageAsync(message,TimeSpan.FromSeconds(10),TimeSpan.FromSeconds(30)); //Adding Time to live and visibility timeout
+           await _queueClient.SendMessageAsync(message,null,TimeSpan.FromSeconds(30)); //Adding Time to live and visibility timeout
         }
     }
 }

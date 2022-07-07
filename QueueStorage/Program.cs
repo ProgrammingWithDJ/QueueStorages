@@ -14,14 +14,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var final = builder.Configuration.GetSection("ConnectionDomain");
-var queueName = "weatherdata";
+
+var credentials = new DefaultAzureCredential();
+var queueUri = new Uri(final.Value);
 builder.Services.AddAzureClients(builder =>
 {
 
 
     builder.AddClient<QueueClient, QueueClientOptions>((_, _, _) =>
     {
-        return new QueueClient(final.Value, queueName);
+        return new QueueClient(queueUri, credentials);
     });
     //builder.AddServiceBusClient(connectionString);  // Removed this since it is not needed for managed Identitu
 });
